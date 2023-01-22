@@ -1,5 +1,5 @@
 {
-  "name": "@cqd/main",
+  "name": "@cqdev/site",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -11,6 +11,14 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^1.9.0"
+    "pino-http": "8.3.1"
+  },
+  "devDependencies": {
+    "@astrojs/image": "0.12.1",
+    "@astrojs/mdx": "0.14.0",
+    "@astrojs/node": "4.0.0",
+    "@types/node": "18.11.18",
+    "astro": "1.9.2",
+    "typescript": "4.9.4"
   }
 }

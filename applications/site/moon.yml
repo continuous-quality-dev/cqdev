@@ -41,7 +41,7 @@ tasks:
     deps:
       - "~:install"
   typecheck:
-    command: "pnpm tsc --noEmit"
+    command: "pnpm tsc"
     inputs:
       - "**/*.{ts|tsx}"
     deps:

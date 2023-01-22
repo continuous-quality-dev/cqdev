@@ -1,5 +1,5 @@
 # https://moonrepo.dev/docs/config/workspace
-$schema: 'https://moonrepo.dev/schemas/workspace.json'
+$schema: "https://moonrepo.dev/schemas/workspace.json"
 
 # Extend and inherit an external configuration file. Must be a valid HTTPS URL or file system path.
 # extends: './shared/workspace.yml'
@@ -9,8 +9,10 @@ $schema: 'https://moonrepo.dev/schemas/workspace.json'
 # path to the project folder as the map value. File paths are relative from the workspace root,
 # and cannot reference projects located outside the workspace boundary.
 projects:
-  - 'apps/*'
-  - 'packages/*'
+  - "applications/*"
+  - "packages/*"
+  - "libraries/*"
+  - "tools/*"
 
 vcs:
   manager: "git"
