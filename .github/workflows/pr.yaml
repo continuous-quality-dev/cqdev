@@ -1,0 +1,86 @@
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+permissions: write-all
+jobs:
+  trunk:
+    name: Trunk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.head_ref }}
+      - uses: "actions/setup-node@v3"
+        with:
+          node-version-file: ".nvmrc"
+          # cache: "pnpm"
+          # cache-dependency-path: "**/pnpm-lock.yaml"
+      - run: corepack enable
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.25.0
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      # - name: Install dependencies
+      #   run: pnpm install
+      - run: curl -fsSL https://moonrepo.dev/install.sh | bash
+
+      # - run: curl https://get.trunk.io -fsSL | bash -s -- -y
+      # - run: ./trunk install --no-progress
+      # - run: ./moon ci
+      # - uses: moonrepo/tool-version-action@v1
+      # - run: moon ci
+      - run: pnpm i
+      - name: Trunk Check
+        uses: trunk-io/trunk-action@v1
+      - run: moon ci
+      # - run: pnpm moon ci
+      - uses: moonrepo/run-report-action@v1
+        if: success() || failure()
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: pnpm danger:ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # tea:
+  #   name: Tea
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 7.25.0
+  #     - uses: "actions/setup-node@v3"
+  #       with:
+  #         node-version-file: ".nvmrc"
+  #         cache: "pnpm"
+  #         cache-dependency-path: "**/pnpm-lock.yaml"
+  #     - uses: teaxyz/setup@v0
+  #       with:
+  #         target: README.md
+  #     - run: moon ci
+  #     - uses: moonrepo/run-report-action@v1
+  #       if: success() || failure()
+  #       with:
+  #         access-token: ${{ secrets.GITHUB_TOKEN }}

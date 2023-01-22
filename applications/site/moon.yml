@@ -1,0 +1,55 @@
+language: "typescript"
+type: "application"
+
+fileGroups:
+  astro:
+    - "src/**/*"
+    - "astro.config.*"
+
+tasks:
+  # astro:
+  #   command: "astro"
+  #   local: true
+
+  # # Development server
+  # dev:
+  #   command: "astro dev"
+  #   local: true
+
+  # Production build
+  build:
+    command: "astro build"
+    inputs:
+      - "@group(astro)"
+    outputs:
+      - "dist"
+    deps:
+      - "~:install"
+  # start:
+  #   command: "node server.mjs"
+  #   inputs:
+  #     - "dist"
+  #     - "server.mjs"
+  #   deps:
+  #     - "~:build"
+  #   local: true
+  # Check .astro files
+  check:
+    command: "astro check"
+    inputs:
+      - "@group(astro)"
+    deps:
+      - "~:install"
+  typecheck:
+    command: "pnpm tsc --noEmit"
+    inputs:
+      - "**/*.{ts|tsx}"
+    deps:
+      - "~:check"
+
+  # Preview production build locally
+  # preview:
+  #   command: "astro preview"
+  #   deps:
+  #     - "~:build"
+  #   local: true

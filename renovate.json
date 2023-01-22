@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "additionalBranchPrefix": "{{parentDir}}-",
+  "docker": {
+    "versioning": "docker"
+  },
+  "docker-compose": {
+    "fileMatch": ["(^|/)(?:docker-)?compose[^/]*\\.ya?ml$"]
+  },
+  "npm": {
+    "fileMatch": ["(^|/)package\\.json$"],
+    "rollbackPrs": true,
+    "versioning": "npm"
+  },
+  "lockFileMaintenance": {
+    "enabled": false
+  }
+}
