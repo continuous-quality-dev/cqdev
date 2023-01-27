@@ -1,5 +1,5 @@
 {
-  "name": "@cqdev/site",
+  "name": "@cqdev/repo-docs",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -11,14 +11,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "pino-http": "8.3.1"
-  },
-  "devDependencies": {
     "@astrojs/image": "0.13.0",
     "@astrojs/mdx": "0.15.1",
-    "@astrojs/node": "5.0.1",
-    "@types/node": "18.11.18",
-    "astro": "2.0.2",
-    "typescript": "4.9.4"
+    "astro": "^2.0.2"
   }
 }
